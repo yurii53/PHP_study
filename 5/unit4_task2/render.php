@@ -1,6 +1,6 @@
-<a href="<?php $_SERVER['PHP_SELF']; ?>?sort=price&order=0">Від дешевших до дорожчих</a>
+<a href="<?php $_SERVER['PHP_SELF']; ?>?sort=price&order=1">Від дешевших до дорожчих</a>
     <br>
-<a href="<?php $_SERVER['PHP_SELF']; ?>?sort=price&order=1">Від дорожчих до дешевших</a>
+<a href="<?php $_SERVER['PHP_SELF']; ?>?sort=price&order=-1">Від дорожчих до дешевших</a>
 
 
 <?php
@@ -16,23 +16,21 @@ if (isset($_GET['order'])) {
             $order = 0;
         } 
 
-$array_name = [];
-
-foreach ($products as $key => $row)
+function sortArr(array $a, array $b)
 {
-    $array_name[$key] = $row[$sort];
+    global $sort, $order;
+    if ($a[$sort]==$b[$sort]) return 0;
+    return ($a[$sort]<$b[$sort])?-1*$order:1*$order;
 }
 
 if ($order==0){
-    array_multisort($array_name, SORT_ASC, $products);
-
+    uasort($products,"sortArr");
 }
 else{
-    array_multisort($array_name, SORT_DESC, $products);
-
+    uasort($products,"sortArr");
 }
 
-        
+
    
 foreach($products as $product)  :
 ?>
