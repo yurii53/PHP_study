@@ -5,35 +5,55 @@
 </head>
 <body>
 
-<form action="<?php echo $_SERVER['PHP_SELF']?>" method="post">
-    Ваше ім'я: <input type="text" name="text"><br>
-    <input type="submit">
-</form>
 <?php
-if (!empty($_POST['text'])) {
-    
-    $text = $_POST['text'];
-    $arr = explode(" ", $text);
-    $counter = 0;
-    $c=0;
-    foreach($arr as $word)
+function simplFibo($count)
+{
+    if ($count == 1)
     {
-        
-        
-        $counter += mb_strlen($word);
-
-        if ($counter > 40)
-        {
-            $counter = mb_strlen($word);
-            $new_arr[] = "<br>";
-        }
-        $counter ++;
-        $new_arr[] = $word;
-
+        echo 1;
+        return;
     }
-
-    echo implode(" ", $new_arr) . "<br>";
+    $previos = 1;
+    $curent = 1;
+    echo "1 1";
+    for ($i = 2; $i < $count; $i++)
+    {
+        $tmp = $curent;
+        $curent += $previos;
+        $previos = $tmp;
+        echo " $curent";
+    }
+    return;
 }
+
+function recursFibo($count)
+{
+    //$count = 20;
+    if ($count == 1)
+    {
+        echo 1;
+        return;
+    } 
+    static $previos = 1;
+    static $curent = 1;
+    static $i = 3;
+    if ($i == 3)
+    {
+        echo "1 1";
+    }
+    
+    if ($i > $count) return;
+    $tmp = $curent;
+    $curent += $previos;
+    $previos = $tmp;
+    $i++;
+    echo " $curent";
+    recursFibo($count);
+}
+
+simplFibo(20);
+echo "<br>";
+recursFibo(20);
 ?>
 
 </body>
